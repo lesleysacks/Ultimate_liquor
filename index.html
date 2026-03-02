@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate Liquors Store 
+</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #d4af37;
+    --gold-light: #E8C96A;
+    --gold-dark: #b8941f;
+    --dark: #0A0A0A;
+    --dark2: #121212;
+    --dark3: #1A1A1A;
+    --burgundy: #722f37;
+    --burgundy-light: #9B1D1D;
+    --cream: #F5EDD6;
+    --text-muted: #888;
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--dark);
+    color: var(--cream);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+  }
+
+ 
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--dark2);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--burgundy);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--gold);
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 48px;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    transition: all 0.4s var(--transition-smooth);
+  }
+
+  nav.scrolled {
+    padding: 12px 48px;
+    background: rgba(10, 10, 10, 0.95);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nav-logo::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--burgundy));
+    transition: width 0.4s var(--transition-smooth);
+  }
+
+  .nav-logo:hover::after {
+    width: 100%;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--cream);
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.75;
+    transition: all 0.3s var(--transition-smooth);
+    position: relative;
+    padding: 5px 0;
+  }
+
+  .nav-links a::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.3s var(--transition-smooth);
+  }
+
+  .nav-links a:hover {
+    opacity: 1;
+    color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .nav-links a:hover::before {
+    width: 100%;
+  }
+
+  .nav-cta {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    color: var(--dark);
+    padding: 10px 22px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 48px 80px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 80% at 70% 50%, rgba(114, 47, 55, 0.25) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 20% 80%, rgba(212, 175, 55, 0.15) 0%, transparent 60%),
+      linear-gradient(135deg, #0A0A0A 0%, #111 50%, #0D0A05 100%);
+  }
+
+  .particles {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    opacity: 0;
+    animation: float 15s infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      opacity: 0;
+      transform: translateY(100vh) scale(0);
+    }
+    10% {
+      opacity: 0.6;
+    }
+    90% {
+      opacity: 0.6;
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-100vh) scale(1);
+    }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(212,175,55,0.4);
+    padding: 6px 16px;
+    margin-bottom: 28px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s var(--transition-smooth);
+  }
+
+  .hero-badge.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    line-height: 0.95;
+    font-weight: 900;
+    color: var(--cream);
+    margin-bottom: 8px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s var(--transition-smooth) 0.1s;
+  }
+
+  .hero h1.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero h1 span {
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s var(--transition-smooth) 0.2s;
+  }
+
+  .hero-sub.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(245,237,214,0.65);
+    max-width: 440px;
+    margin-bottom: 44px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s var(--transition-smooth) 0.3s;
+  }
+
+  .hero-desc.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s var(--transition-smooth) 0.4s;
+  }
+
+  .hero-actions.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    color: var(--dark);
+    padding: 14px 34px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s var(--transition-smooth);
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
+  }
+
+  .btn-outline {
+    border: 1px solid rgba(212,175,55,0.5);
+    color: var(--gold);
+    padding: 14px 34px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s var(--transition-smooth);
+    display: inline-block;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    background: rgba(212,175,55,0.08);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+  }
+
+  .hero-stats {
+    position: absolute;
+    right: 80px;
+    bottom: 80px;
+    display: flex;
+    gap: 48px;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s var(--transition-smooth) 0.5s;
+  }
+
+  .hero-stats.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stat {
+    text-align: center;
+    position: relative;
+    padding: 20px;
+    background: rgba(18, 18, 18, 0.6);
+    border: 1px solid rgba(212,175,55,0.1);
+    border-radius: 4px;
+    transition: all 0.3s var(--transition-smooth);
+  }
+
+  .stat:hover {
+    transform: translateY(-5px);
+    border-color: rgba(212,175,55,0.3);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* TICKER */
+  .ticker {
+    background: linear-gradient(90deg, var(--burgundy), var(--burgundy-light));
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .ticker-inner {
+    display: inline-block;
+    animation: ticker 30s linear infinite;
+  }
+
+  .ticker-inner span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cream);
+    padding: 0 40px;
+  }
+
+  .ticker-inner span::after {
+    content: '✦';
+    margin-left: 40px;
+    color: var(--gold);
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SPECIALS */
+  .section {
+    padding: 100px 48px;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 60px;
+  }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--cream);
+    line-height: 1.1;
+  }
+
+  .section-link {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(212,175,55,0.4);
+    padding-bottom: 2px;
+    transition: all 0.3s var(--transition-smooth);
+    white-space: nowrap;
+  }
+
+  .section-link:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+
+  /* PRODUCTS */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .product-card {
+    background: var(--dark2);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s var(--transition-smooth);
+    border: 1px solid rgba(212,175,55,0.05);
+    border-radius: 4px;
+  }
+
+  .product-card:hover {
+    transform: translateY(-8px);
+    z-index: 2;
+    border-color: rgba(212,175,55,0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  }
+
+  .product-img-area {
+    height: 240px;
+    background: linear-gradient(135deg, #1a1208 0%, #0e0e0e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-img-area img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 20px;
+    transition: all 0.5s var(--transition-smooth);
+  }
+
+  .product-card:hover .product-img-area img {
+    transform: scale(1.1);
+  }
+
+  .product-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(114, 47, 55, 0.2);
+    opacity: 0;
+    transition: opacity 0.4s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-card:hover .product-overlay {
+    opacity: 1;
+  }
+
+  .product-body {
+    padding: 24px;
+  }
+
+  .product-category {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .product-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--cream);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .product-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .product-price {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .product-price span {
+    font-size: 1rem;
+    opacity: 0.7;
+  }
+
+  .product-tag {
+    background: linear-gradient(135deg, var(--burgundy), var(--burgundy-light));
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 2px;
+  }
+
+  /* ABOUT */
+  .about-section {
+    background: var(--dark2);
+    padding: 100px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-big-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(6rem, 12vw, 11rem);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(212,175,55,0.15);
+    line-height: 1;
+  }
+
+  .about-visual-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--dark3);
+    border: 1px solid rgba(212,175,55,0.2);
+    padding: 32px 40px;
+    text-align: center;
+    width: 260px;
+  }
+
+  .about-visual-card p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .about-visual-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--cream);
+  }
+
+  .about-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    color: var(--cream);
+    line-height: 1.15;
+    margin-bottom: 24px;
+  }
+
+  .about-text p {
+    color: rgba(245,237,214,0.6);
+    line-height: 1.8;
+    margin-bottom: 16px;
+    font-size: 0.98rem;
+  }
+
+  .about-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 36px;
+  }
+
+  .feature {
+    border-left: 2px solid var(--gold);
+    padding-left: 16px;
+  }
+
+  .feature h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+
+  .feature p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* HOURS */
+  .hours-section {
+    padding: 100px 48px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .hours-title h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.1;
+    margin-top: 12px;
+    margin-bottom: 24px;
+  }
+
+  .hours-title p {
+    color: rgba(245,237,214,0.55);
+    font-size: 0.97rem;
+    line-height: 1.7;
+    max-width: 380px;
+  }
+
+  .call-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 32px;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 14px 28px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+  .call-btn:hover { background: var(--gold); color: var(--dark); }
+
+  .hours-table {
+    background: var(--dark2);
+    padding: 40px;
+    border-radius: 8px;
+    border: 1px solid rgba(212,175,55,0.1);
+  }
+
+  .hours-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: all 0.3s;
+  }
+
+  .hours-row:hover {
+    background: rgba(212,175,55,0.05);
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 0 -10px;
+    border-radius: 4px;
+  }
+
+  .hours-row:last-child { border-bottom: none; }
+
+  .hours-day {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .hours-time {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--cream);
+  }
+
+  .hours-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 10px var(--gold);
+  }
+
+  /* LOCATION / MAP SECTION - NEW */
+  .location-section {
+    padding: 100px 48px;
+    background: linear-gradient(180deg, var(--dark) 0%, var(--dark2) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .location-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  .location-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .location-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--cream);
+    margin-bottom: 16px;
+  }
+
+  .location-header p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .location-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 48px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .location-info {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .info-card {
+    background: var(--dark3);
+    padding: 32px;
+    border: 1px solid rgba(212,175,55,0.1);
+    border-radius: 8px;
+    transition: all 0.3s var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .info-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--gold), var(--burgundy));
+    transform: scaleY(0);
+    transition: transform 0.3s var(--transition-smooth);
+  }
+
+  .info-card:hover::before {
+    transform: scaleY(1);
+  }
+
+  .info-card:hover {
+    transform: translateX(10px);
+    border-color: rgba(212,175,55,0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  .info-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .info-card p {
+    color: var(--cream);
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .info-card a {
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .info-card a:hover {
+    color: var(--gold-light);
+  }
+
+  .map-container {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(212,175,55,0.1);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .map-container iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 450px;
+    border: none;
+    filter: grayscale(100%) invert(92%) contrast(83%);
+    transition: filter 0.5s;
+  }
+
+  .map-container:hover iframe {
+    filter: grayscale(50%) invert(92%) contrast(83%);
+  }
+
+  .map-overlay {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(10, 10, 10, 0.9);
+    padding: 16px 24px;
+    border-radius: 4px;
+    border: 1px solid rgba(212,175,55,0.2);
+    backdrop-filter: blur(10px);
+  }
+
+  .map-overlay p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0;
+  }
+
+  /* CONTACT BAR */
+  .contact-bar {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    padding: 60px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-bar::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .contact-bar h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    color: var(--dark);
+    max-width: 500px;
+    line-height: 1.2;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-actions {
+    display: flex;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-dark {
+    background: var(--dark);
+    color: var(--gold);
+    padding: 14px 28px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s var(--transition-smooth);
+    display: inline-block;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-dark:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark2);
+    padding: 60px 48px 36px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+  }
+
+  .footer-brand h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .footer-brand p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    max-width: 300px;
+    margin-bottom: 24px;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 12px;
+  }
+
+  .social-btn {
+    width: 42px; height: 42px;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: var(--text-muted);
+    transition: all 0.3s var(--transition-smooth);
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .social-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--gold), var(--burgundy));
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: -1;
+  }
+
+  .social-btn:hover {
+    border-color: transparent;
+    color: var(--dark);
+    transform: translateY(-3px);
+  }
+
+  .social-btn:hover::before {
+    opacity: 1;
+  }
+
+  footer h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  footer ul {
+    list-style: none;
+  }
+
+  footer ul li {
+    margin-bottom: 12px;
+  }
+
+  footer ul li a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  footer ul li a:hover {
+    color: var(--gold);
+    transform: translateX(5px);
+  }
+
+  .footer-bottom {
+    background: var(--dark);
+    padding: 20px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(212,175,55,0.1);
+  }
+
+  .footer-bottom p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .age-warning {
+    background: linear-gradient(135deg, var(--burgundy), var(--burgundy-light));
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border-radius: 4px;
+    animation: pulse-warning 2s infinite;
+  }
+
+  @keyframes pulse-warning {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(155, 29, 29, 0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(155, 29, 29, 0); }
+  }
+
+  /* Mobile Menu */
+  .mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 101;
+  }
+
+  .mobile-menu-btn span {
+    width: 25px;
+    height: 2px;
+    background: var(--gold);
+    transition: all 0.3s;
+  }
+
+  .mobile-menu-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .mobile-menu-btn.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  /* Scroll Reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s var(--transition-smooth);
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .location-container {
+      grid-template-columns: 1fr;
+    }
+    .map-container iframe {
+      min-height: 350px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { 
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      height: 100vh;
+      background: rgba(10, 10, 10, 0.98);
+      flex-direction: column;
+      padding: 100px 48px;
+      transition: right 0.4s var(--transition-smooth);
+      gap: 24px;
+    }
+    .nav-links.active {
+      right: 0;
+    }
+    .mobile-menu-btn {
+      display: flex;
+    }
+    .hero { padding: 120px 24px 60px; }
+    .hero-stats { 
+      position: static; 
+      flex-direction: row; 
+      gap: 16px; 
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .stat { flex: 1; min-width: 100px; }
+    .hero-actions { flex-direction: column; align-items: flex-start; width: 100%; }
+    .btn-primary, .btn-outline { width: 100%; text-align: center; }
+    .section { padding: 60px 24px; }
+    .about-section { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+    .about-big-num { font-size: 5rem; }
+    .hours-section { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+    .contact-bar { flex-direction: column; gap: 28px; text-align: center; padding: 48px 24px; }
+    .contact-actions { flex-direction: column; width: 100%; }
+    .btn-dark { width: 100%; text-align: center; }
+    footer { grid-template-columns: 1fr; padding: 48px 24px 24px; gap: 40px; }
+    .footer-bottom { padding: 16px 24px; flex-direction: column; gap: 12px; text-align: center; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .location-section { padding: 60px 24px; }
+    .info-card:hover { transform: translateX(5px); }
+  }
+
+  @media (max-width: 540px) {
+    .products-grid { grid-template-columns: 1fr; }
+    .about-features { grid-template-columns: 1fr; }
+    .hero-stats { flex-direction: column; }
+    .stat { width: 100%; }
+  }
+</style>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">Ultimate Liquors</div>
+  
+  <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#specials">Specials</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#hours">Hours</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  
+  <a href="tel:0610507967" class="nav-cta desktop-only">📞 Call Us</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="particles" id="particles"></div>
+  
+  <div class="hero-content">
+    <div class="hero-badge" id="heroBadge">Wine · Beer · Spirits</div>
+    <h1 id="heroTitle">Ultimate <img src="pictures/new_logo.jpg" alt="nav-logo width="150px" height="200px"><span>Liquors</span></h1>
+    <p class="hero-sub" id="heroSub">Your Local Spirits Store<br></p>
+    <p class="hero-desc" id="heroDesc">South Africa's finest selection of wines, beers, and premium spirits. Unbeatable deals on your favourite brands — every day, while stocks last.<br>
+      Stock up and save with our comprehensive bulk ordering service, perfect for parties, weddings, and corporate events
+    </p>
+    <div class="hero-actions" id="heroActions">
+      <a href="#specials" class="btn-primary">View Current Specials<br></a>
+      <a href="https://www.facebook.com/share/1EA3XEQBAL/" target="_blank" class="btn-outline"><br>Follow on Facebook</a>
+    </div>
+  </div>
+  
+  <div class="hero-stats" id="heroStats">
+    <div class="stat">
+      <span class="stat-num" data-target="2600">0</span>
+      <span class="stat-label">Likes</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-target="3500">0</span>
+      <span class="stat-label">Followers</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" data-target="269">0</span>
+      <span class="stat-label">Posts</span>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>Summer Specials On Now</span>
+    <span>Bell's Whiskey R209.99</span>
+    <span>Castle Lite 500ml Buy 2 for R189.99</span>
+    <span>VAT 69 Whiskey R179.99</span>
+    <span>Corona Beer Buy 2 for R199.99</span>
+    <span>Jägermeister 750ml R299.99</span>
+    <span>KWV 5 Year R209.99</span>
+    <span>Bernini Buy 2 for R170</span>
+    <span>Redds Berry — Great Deals!</span>
+    <span>Summer Specials On Now</span>
+    <span>Bell's Whiskey R209.99</span>
+    <span>Castle Lite 500ml Buy 2 for R189.99</span>
+    <span>VAT 69 Whiskey R179.99</span>
+    <span>Corona Beer Buy 2 for R199.99</span>
+    <span>Jägermeister 750ml R299.99</span>
+    <span>KWV 5 Year R209.99</span>
+    <span>Bernini Buy 2 for R170</span>
+    <span>Redds Berry — Great Deals!</span>
+  </div>
+</div>
+
+<!-- SPECIALS -->
+<section class="section reveal" id="specials">
+  <div class="section-header">
+    <div>
+      <p class="section-label">Summer Deals 2026</p>
+      <h2 class="section-title">Current Specials</h2>
+    </div>
+    <a href="https://www.facebook.com/share/1EA3XEQBAL/" target="_blank" class="section-link">See All on Facebook →</a>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card reveal">
+      <div class="product-img-area">
+        <img src="pictures/bells whiskey.jpg" alt="Bell's Whiskey bottle">
+        <div class="product-overlay"></div>
+      </div>
+      <div class="product-body">
+        <p class="product-category">Whiskey</p>
+        <h3 class="product-name">Bell's Whiskey</h3>
+        <div class="product-bottom">
+          <div class="product-price"><span>R</span>209.99</div>
+          <div class="product-tag">Special</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img-area">
+        <img src="pictures/castle_lite.jpg" alt="Castle Lite">
+        <div class="product-overlay"></div>
+      </div>
+      <div class="product-body">
+        <p class="product-category">Beer · 500ml</p>
+        <h3 class="product-name">Castle Lite</h3>
+        <div class="product-bottom">
+          <div class="product-price"><span>Buy 2 for R</span>189.99</div>
+          <div class="product-tag">Deal</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img-area">
+        <img src="pictures/vat 69.jpg" alt="Vat 69">
+        <div class="product-overlay"></div>
+      </div>
+      <div class="product-body">
+        <p class="product-category">Whiskey</p>
+        <h3 class="product-name">VAT 69 Whiskey</h3>
+        <div class="product-bottom">
+          <div class="product-price"><span>R</span>179.99</div>
+          <div class="product-tag">Special</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img-area">
+        <img src="pictures/corona beer.jpg" alt="Corona Beer">
+        <div class="product-overlay"></div>
+      </div>
+      <div class="product-body">
+        <p class="product-category">Beer</p>
+        <h3 class="product-name">Corona Beer</h3>
+        <div class="product-bottom">
+          <div class="product-price"><span>Buy 2 for R</span>199.99</div>
+          <div class="product-tag">Deal</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img-area">
+        <img src="pictures/jagermeiser.jpg" alt="Jägermeister">
+        <div class="product-overlay"></div>
+      </div>
+      <div class="product-body">
+        <p class="product-category">Liqueur · 750ml</p>
+        <h3 class="product-name">Jägermeister</h3>
+        <div class="product-bottom">
+          <div class="product-price"><span>R</span>299.99</div>
+          <div class="product-tag">Special</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img-area">
+        <img src="pictures/kwv 5jaar.jpg" alt="KWV 5 Year">
+        <div class="product-overlay"></div>
+      </div>
+      <div class="product-body">
+        <p class="product-category">Brandy · 5 Year</p>
+        <h3 class="product-name">KWV 5 Year</h3>
+        <div class="product-bottom">
+          <div class="product-price"><span>R</span>209.99</div>
+          <div class="product-tag">Special</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img-area">
+        <img src="pictures/bernini.jpg" alt="Bernini Classic">
+        <div class="product-overlay"></div>
+      </div>
+      <div class="product-body">
+        <p class="product-category">Cocktail</p>
+        <h3 class="product-name">Bernini Classic</h3>
+        <div class="product-bottom">
+          <div class="product-price"><span>Buy 2 for R</span>170</div>
+          <div class="product-tag">Deal</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card reveal">
+      <div class="product-img-area">
+        <img src="pictures/red berry cans.jpg" alt="Redds Berry">
+        <div class="product-overlay"></div>
+      </div>
+      <div class="product-body">
+        <p class="product-category">Cider</p>
+        <h3 class="product-name">Redds Berry</h3>
+        <div class="product-bottom">
+          <div class="product-price" style="font-size:1.1rem; padding-top:6px;">Ask In-Store</div>
+          <div class="product-tag">Summer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <p style="text-align:center; margin-top:28px; font-family:'Barlow Condensed',sans-serif; font-size:0.78rem; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted);">Valid while stocks last · #NO under 18 sales</p>
+</section>
+
+<!-- ABOUT -->
+<div class="about-section reveal" id="about">
+  <div class="about-visual">
+    <div class="about-big-num">ULS</div>
+    <div class="about-visual-card">
+      <p>Serving You</p>
+      <h3>Wine, Beer<br>& Spirits</h3>
+    </div>
+  </div>
+
+  <div class="about-text">
+    <p class="section-label">Who We Are</p>
+    <h2>Your Ultimate Destination for Premium Drinks</h2>
+    <p>Ultimate Liquors Store is your go-to local bottle store for an outstanding selection of wines, beers, and premium spirits — all at unbeatable prices.</p>
+    <p>We're passionate about giving our customers the best deals on their favourite brands. From imported beers to aged whiskeys and award-winning wines, we've got something for every occasion and every taste.<br>
+    <strong> <br>Key features of our bulk service:<br></strong>
+ Better pricing per unit for large-volume orders.
+Wide Selection: Access to local and international brands.
+Convenience: Perfect for event organizers, restaurants, and individuals. </p>
+
+    <div class="about-features">
+      <div class="feature reveal">
+        <h4>Wide Selection</h4>
+        <p>Wines, beers, spirits & more</p>
+      </div>
+      <div class="feature reveal">
+        <h4>Best Prices</h4>
+        <p>Unbeatable weekly deals</p>
+      </div>
+      <div class="feature reveal">
+        <h4>Responsible</h4>
+        <p>No sales under 18 years</p>
+      </div>
+      <div class="feature reveal">
+        <h4>Community</h4>
+        <p>2600+ loyal customers</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOURS -->
+<section class="hours-section reveal" id="hours">
+  <div class="hours-title">
+    <p class="section-label">We're Open</p>
+    <h2 class="section-title">Trading Hours</h2>
+    <p>Come visit us for all your drink needs. We're open most days of the week to serve you with the best selection and prices in town.</p>
+    <a href="tel:0610507967" class="call-btn">
+      📞 061 050 7967
+    </a>
+  </div>
+
+  <div class="hours-table">
+    <div class="hours-row">
+      <span class="hours-day">Monday</span>
+      <div class="hours-dot"></div>
+      <span class="hours-time">09:00 – 19:00</span>
+    </div>
+    <div class="hours-row">
+      <span class="hours-day">Tuesday</span>
+      <div class="hours-dot"></div>
+      <span class="hours-time">09:00 – 19:00</span>
+    </div>
+    <div class="hours-row">
+      <span class="hours-day">Wednesday</span>
+      <div class="hours-dot"></div>
+      <span class="hours-time">09:00 – 19:00</span>
+    </div>
+    <div class="hours-row">
+      <span class="hours-day">Thursday</span>
+      <div class="hours-dot"></div>
+      <span class="hours-time">09:00 – 19:00</span>
+    </div>
+    <div class="hours-row">
+      <span class="hours-day">Friday</span>
+      <div class="hours-dot"></div>
+      <span class="hours-time">09:00 – 19:00</span>
+    </div>
+    <div class="hours-row">
+      <span class="hours-day">Saturday</span>
+      <div class="hours-dot"></div>
+      <span class="hours-time">09:00 – 19:00</span>
+    </div>
+    <div class="hours-row">
+      <span class="hours-day">Sunday</span>
+      <div class="hours-dot" style="background:var(--text-muted); box-shadow:none;"></div>
+      <span class="hours-time" style="color:var(--text-muted)">Closed</span>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION / MAP SECTION - NEW -->
+<section class="location-section reveal" id="location">
+  <div class="location-header">
+    <p class="section-label">Find Us</p>
+    <h2>Visit Our Store</h2>
+    <p>Conveniently located and easy to find. Stop by for the best deals on your favorite beverages.</p>
+  </div>
+
+  <div class="location-container">
+    <div class="location-info">
+      <div class="info-card reveal">
+        <h3>📍 Address</h3>
+        <p><br>Bokmakierie Street, Amstelhof, Paarl, 7646<br>South Africa</p>
+      </div>
+      
+      <div class="info-card reveal">
+        <h3>📞 Phone | Email</h3>
+
+        <p><a href="tel:0610507967">061 050 7967<br></a>
+        <a href="email:ultimateliquors@gmail.com">ultimateliquors@gmail.com</a>
+        </p>
+      </div>
+      
+      <div class="info-card reveal">
+        <h3>🕒 Hours</h3>
+        <p>Mon - Sat: 9:00 AM - 7:00 PM<br>Sunday: Closed</p>
+      </div>
+      
+      <div class="info-card reveal">
+        <h3>🚗 Parking</h3>
+        <p>Free parking available<br>in front of the store</p>
+      </div>
+    </div>
+
+    <div class="map-container reveal">
+      <!-- Replace with your actual Google Maps embed URL -->
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3317.931824448376!2d19.00665979999999!3d-33.73657899999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcda7e775535965%3A0x7d4fe7c8cbfdb401!2sUltimate%20Liquory!5e0!3m2!1sen!2sza!4v1772471317935!5m2!1sen!2sza"  
+        allowfullscreen="" 
+        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <div class="map-overlay">
+        <p>Ultimate Liquors Store</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT BAR -->
+<div class="contact-bar reveal" id="contact">
+  <h2>Get the Latest Deals Before Anyone Else</h2>
+  <div class="contact-actions">
+    <a href="https://www.facebook.com/share/1EA3XEQBAL/" target="_blank" class="btn-dark">Follow on Facebook</a>
+    <a href="tel:0610507967" class="btn-dark">Call: 061 050 7967</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="reveal">
+  <div class="footer-brand">
+    <h3>Ultimate Liquors</h3>
+    <p>Your trusted local wine, beer & spirits store. Serving our community with the finest selection and unbeatable prices.</p>
+    <div class="footer-social">
+      <a href="https://www.facebook.com/share/1EA3XEQBAL/" target="_blank" class="social-btn">f</a>
+    </div>
+  </div>
+
+  <div>
+    <h4>Navigation</h4>
+    <ul>
+      <li><a href="#specials">Current Specials</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#hours">Trading Hours</a></li>
+      <li><a href="#location">Location</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+
+  <div>
+    <h4>Contact</h4>
+    <ul>
+      <li><a href="tel:0610507967">061 050 7967</a></li>
+      <li><a href="email:ultimateliquors@gmail.com">ultimateliquors@gmail.com</a></li>
+      <li><a href="https://www.facebook.com/share/1EA3XEQBAL/" target="_blank">Facebook Page</a></li>
+    </ul>
+  </div>
+</footer>
+
+<div class="footer-bottom">
+  <p>© 2025 Ultimate Liquors Store. All rights reserved.</p>
+  <div class="age-warning">18+ Only · Drink Responsibly</div>
+</div>
+
+<script>
+  // Create floating particles
+  function createParticles() {
+    const container = document.getElementById('particles');
+    const particleCount = 20;
+    
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.animationDelay = Math.random() * 15 + 's';
+      particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+      container.appendChild(particle);
+    }
+  }
+
+  // Animate hero elements on load
+  function animateHero() {
+    setTimeout(() => {
+      document.getElementById('heroBadge').classList.add('visible');
+    }, 300);
+    
+    setTimeout(() => {
+      document.getElementById('heroTitle').classList.add('visible');
+    }, 500);
+    
+    setTimeout(() => {
+      document.getElementById('heroSub').classList.add('visible');
+    }, 700);
+    
+    setTimeout(() => {
+      document.getElementById('heroDesc').classList.add('visible');
+    }, 900);
+    
+    setTimeout(() => {
+      document.getElementById('heroActions').classList.add('visible');
+    }, 1100);
+    
+    setTimeout(() => {
+      document.getElementById('heroStats').classList.add('visible');
+      animateCounters();
+    }, 1300);
+  }
+
+  // Counter animation
+  function animateCounters() {
+    const counters = document.querySelectorAll('.stat-num');
+    
+    counters.forEach(counter => {
+      const target = parseInt(counter.getAttribute('data-target'));
+      const duration = 2000;
+      const increment = target / (duration / 16);
+      let current = 0;
+      
+      const updateCounter = () => {
+        current += increment;
+        if (current < target) {
+          counter.textContent = Math.floor(current).toLocaleString() + (target > 1000 ? 'K+' : '+');
+          requestAnimationFrame(updateCounter);
+        } else {
+          counter.textContent = target.toLocaleString() + (target > 1000 ? 'K+' : '+');
+        }
+      };
+      
+      updateCounter();
+    });
+  }
+
+  // Scroll reveal animation
+  function initScrollReveal() {
+    const reveals = document.querySelectorAll('.reveal');
+    
+    const revealOnScroll = () => {
+      reveals.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        const revealPoint = 150;
+        
+        if (elementTop < windowHeight - revealPoint) {
+          element.classList.add('active');
+        }
+      });
+    };
+    
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll(); // Check on load
+  }
+
+  // Navbar scroll effect
+  function initNavbar() {
+    const navbar = document.getElementById('navbar');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  }
+
+  // Mobile menu toggle
+  function initMobileMenu() {
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    
+    menuBtn.addEventListener('click', () => {
+      menuBtn.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+    
+    // Close menu when clicking a link
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuBtn.classList.remove('active');
+        navLinks.classList.remove('active');
+      });
+    });
+  }
+
+  // Smooth scroll
+  function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  }
+
+  // Parallax effect for hero
+  function initParallax() {
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const heroBg = document.querySelector('.hero-bg');
+      if (heroBg && scrolled < window.innerHeight) {
+        heroBg.style.transform = `translateY(${scrolled * 0.5}px)`;
+      }
+    });
+  }
+
+  // Product card hover sound effect (optional - visual feedback only)
+  function initProductEffects() {
+    const cards = document.querySelectorAll('.product-card');
+    
+    cards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.zIndex = '10';
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        setTimeout(() => {
+          card.style.zIndex = '';
+        }, 300);
+      });
+    });
+  }
+
+  // Initialize everything
+  document.addEventListener('DOMContentLoaded', () => {
+    createParticles();
+    animateHero();
+    initScrollReveal();
+    initNavbar();
+    initMobileMenu();
+    initSmoothScroll();
+    initParallax();
+    initProductEffects();
+  });
+
+  // Performance: Pause animations when tab is hidden
+  document.addEventListener('visibilitychange', () => {
+    const ticker = document.querySelector('.ticker-inner');
+    if (document.hidden) {
+      ticker.style.animationPlayState = 'paused';
+    } else {
+      ticker.style.animationPlayState = 'running';
+    }
+  });
+</script>
+
+</body>
+</html>
